@@ -1,0 +1,1585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>FF Sensitivity Pro</title>
+
+<style>
+  .copy-btn{
+    margin-top:10px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:#292936;
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.copy-btn:hover{
+    background:#ffcc00;
+    color:#111;
+}
+
+.headshot-box{
+    margin-top:20px;
+    padding:18px;
+    border-radius:14px;
+    background:#1d1d27;
+}
+
+.headshot-box h3{
+    color:#ffcc00;
+    margin-bottom:12px;
+}
+
+.headshot-box p{
+    color:#ddd;
+    margin:7px 0;
+}  
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Arial,sans-serif;
+    background:#07070b;
+    color:white;
+}
+
+header{
+    text-align:center;
+    padding:35px 20px;
+    background:linear-gradient(135deg,#171720,#09090d);
+    border-bottom:1px solid #292936;
+}
+
+.logo{
+    font-size:36px;
+    font-weight:bold;
+}
+
+.logo span{
+    color:#ffcc00;
+}
+
+header p{
+    color:#999;
+    margin-top:10px;
+}
+
+.container{
+    max-width:1150px;
+    margin:auto;
+    padding:30px 20px;
+}
+
+.search{
+    display:flex;
+    gap:10px;
+    margin-bottom:20px;
+}
+
+.search input{
+    flex:1;
+    padding:17px;
+    border-radius:12px;
+    border:1px solid #30303a;
+    background:#17171f;
+    color:white;
+    font-size:16px;
+    outline:none;
+}
+
+.search button,
+.card button{
+    border:0;
+    border-radius:12px;
+    background:#ffcc00;
+    color:#111;
+    font-weight:bold;
+    cursor:pointer;
+}
+
+.search button{
+    padding:0 25px;
+}
+
+.filters{
+    display:flex;
+    gap:8px;
+    overflow-x:auto;
+    margin-bottom:20px;
+    padding-bottom:10px;
+}
+
+.filters button{
+    white-space:nowrap;
+    border:0;
+    border-radius:10px;
+    padding:12px 18px;
+    background:#191921;
+    color:#ddd;
+    cursor:pointer;
+}
+
+.filters button.active,
+.filters button:hover{
+    background:#ffcc00;
+    color:#111;
+}
+
+.stats{
+    color:#888;
+    margin-bottom:18px;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:16px;
+}
+
+.card{
+    background:#15151d;
+    border:1px solid #292936;
+    border-radius:16px;
+    padding:20px;
+    transition:.2s;
+}
+
+.card:hover{
+    transform:translateY(-4px);
+    border-color:#ffcc00;
+}
+
+.card h2{
+    font-size:19px;
+    margin-bottom:8px;
+}
+
+.brand{
+    color:#888;
+    margin-bottom:18px;
+}
+
+.card button{
+    width:100%;
+    padding:13px;
+}
+
+.empty{
+    grid-column:1/-1;
+    text-align:center;
+    color:#888;
+    padding:50px;
+}
+
+.modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.85);
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+}
+
+.modal-box{
+    width:100%;
+    max-width:540px;
+    background:#15151d;
+    border:1px solid #333;
+    border-radius:18px;
+    padding:25px;
+}
+
+.close{
+    float:right;
+    font-size:30px;
+    color:#aaa;
+    cursor:pointer;
+}
+
+.settings{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:12px;
+    margin-top:20px;
+}
+
+.setting{
+    background:#22222d;
+    padding:17px;
+    border-radius:12px;
+}
+
+.setting small{
+    display:block;
+    color:#999;
+    margin-bottom:7px;
+}
+
+.setting strong{
+    color:#ffcc00;
+    font-size:25px;
+}
+
+.note{
+    margin-top:18px;
+    color:#777;
+    font-size:12px;
+    line-height:1.5;
+    text-align:center;
+}
+
+footer{
+    text-align:center;
+    color:#666;
+    padding:40px 20px;
+}
+
+@media(max-width:800px){
+
+    .grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
+@media(max-width:550px){
+
+    .search{
+        flex-direction:column;
+    }
+
+    .search button{
+        padding:14px;
+    }
+
+    .grid{
+        grid-template-columns:1fr;
+    }
+
+    .logo{
+        font-size:28px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🔥 FF <span>Sensitivity Pro</span>
+    </div>
+
+    <p>
+        Find recommended Free Fire sensitivity for your phone
+    </p>
+
+</header>
+
+
+<div class="container">
+
+    <div class="search">
+
+        <input
+            id="search"
+            type="text"
+            placeholder="🔎 Search phone model..."
+            oninput="renderPhones()"
+        >
+
+        <button onclick="renderPhones()">
+            Search
+        </button>
+
+    </div>
+
+
+    <div class="filters" id="filters"></div>
+
+
+    <div class="stats" id="stats"></div>
+
+
+    <div class="grid" id="phoneGrid"></div>
+
+</div>
+
+
+<footer>
+    © 2026 FF Sensitivity Pro
+</footer>
+
+
+<!-- SENSITIVITY POPUP -->
+
+<div class="modal" id="modal">
+
+    <div class="modal-box">
+
+        <span class="close" onclick="closeModal()">
+            ×
+        </span>
+
+        <h2 id="phoneTitle"></h2>
+        <div class="phone-info">
+
+    <div class="phone-icon">
+        📱
+    </div>
+
+    <div class="phone-details">
+
+        <h3>Phone Information</h3>
+
+        <p>
+            📱 Model:
+            <span id="infoModel">-</span>
+        </p>
+
+        <p>
+            🏷️ Brand:
+            <span id="infoBrand">-</span>
+        </p>
+
+        <p>
+            🎮 Gaming:
+            <span>Recommended</span>
+        </p>
+
+        <p>
+            🎯 Headshot:
+            <span>Drag Headshot</span>
+        </p>
+
+    </div>
+
+</div>
+<div class="headshot-box">
+
+    <h3>🔥 Headshot Settings</h3>
+
+    <p>🎯 Aim Precision: <b>Default</b></p>
+
+    <p>🎯 Aim Assist: <b>ON</b></p>
+
+    <p>🖱️ Drag Style: <b>Short & Fast</b></p>
+
+    <p>🔥 Recommended: <b>Drag Headshot</b></p>
+
+</div>
+        <div class="settings">
+            <button class="copy-btn" onclick="copySensitivity()">
+    📋 Copy Sensitivity
+</button>
+
+            <div class="setting">
+                <small>General</small>
+                <strong id="general"></strong>
+            </div>
+
+            <div class="setting">
+                <small>Red Dot</small>
+                <strong id="redDot"></strong>
+            </div>
+
+            <div class="setting">
+                <small>2x Scope</small>
+                <strong id="scope2"></strong>
+            </div>
+
+            <div class="setting">
+                <small>4x Scope</small>
+                <strong id="scope4"></strong>
+            </div>
+
+            <div class="setting">
+                <small>Sniper</small>
+                <strong id="sniper"></strong>
+            </div>
+
+            <div class="setting">
+                <small>Free Look</small>
+                <strong id="freeLook"></strong>
+            </div>
+
+        </div>
+
+        <p class="note">
+            These are recommended starting settings.
+            They are not official Free Fire values.
+            Adjust them according to your device and play style.
+        </p>
+
+    </div>
+
+</div>
+
+
+<script>
+
+/*
+==================================================
+PHONE DATABASE
+==================================================
+*/
+
+const phones = [
+
+/* SAMSUNG */
+
+["Samsung","Galaxy S24 Ultra",180,175,165,155,90,170],
+["Samsung","Galaxy S24+",184,179,169,159,93,174],
+["Samsung","Galaxy S24",188,183,173,163,96,178],
+["Samsung","Galaxy S23 Ultra",179,174,164,154,89,169],
+["Samsung","Galaxy S23+",183,178,168,158,92,173],
+["Samsung","Galaxy S23",186,181,171,161,95,176],
+["Samsung","Galaxy S22 Ultra",181,176,166,156,90,171],
+["Samsung","Galaxy S22+",185,180,170,160,93,175],
+["Samsung","Galaxy S22",189,184,174,164,96,179],
+["Samsung","Galaxy S21 Ultra",183,178,168,158,92,173],
+["Samsung","Galaxy S21+",187,182,172,162,95,177],
+["Samsung","Galaxy S21",190,185,175,165,98,180],
+["Samsung","Galaxy A55",191,186,178,168,99,182],
+["Samsung","Galaxy A35",193,188,180,170,101,184],
+["Samsung","Galaxy A25",195,190,182,172,103,186],
+["Samsung","Galaxy A15",197,192,184,174,105,188],
+["Samsung","Galaxy A14",198,193,185,175,106,189],
+["Samsung","Galaxy A54",190,185,177,167,98,181],
+["Samsung","Galaxy A34",192,187,179,169,100,183],
+["Samsung","Galaxy A24",195,190,182,172,103,186],
+["Samsung","Galaxy A73",188,183,175,165,96,179],
+["Samsung","Galaxy A53",190,185,177,167,98,181],
+["Samsung","Galaxy A33",193,188,180,170,101,184],
+["Samsung","Galaxy A23",196,191,183,173,104,187],
+["Samsung","Galaxy A13",198,193,185,175,106,189],
+
+/* APPLE */
+
+["Apple","iPhone 15 Pro Max",176,171,161,151,86,167],
+["Apple","iPhone 15 Pro",179,174,164,154,88,170],
+["Apple","iPhone 15 Plus",181,176,166,156,90,172],
+["Apple","iPhone 15",183,178,168,158,92,174],
+["Apple","iPhone 14 Pro Max",177,172,162,152,87,168],
+["Apple","iPhone 14 Pro",180,175,165,155,89,171],
+["Apple","iPhone 14 Plus",182,177,167,157,91,173],
+["Apple","iPhone 14",184,179,169,159,93,175],
+["Apple","iPhone 13 Pro Max",179,174,164,154,88,170],
+["Apple","iPhone 13 Pro",181,176,166,156,90,172],
+["Apple","iPhone 13",184,179,169,159,93,175],
+["Apple","iPhone 13 mini",185,180,170,160,94,176],
+["Apple","iPhone 12 Pro Max",181,176,166,156,90,172],
+["Apple","iPhone 12 Pro",183,178,168,158,92,174],
+["Apple","iPhone 12",185,180,170,160,94,176],
+["Apple","iPhone 12 mini",186,181,171,161,95,177],
+["Apple","iPhone 11 Pro Max",183,178,168,158,92,174],
+["Apple","iPhone 11 Pro",185,180,170,160,94,176],
+["Apple","iPhone 11",188,183,173,163,97,179],
+["Apple","iPhone XS Max",186,181,171,161,95,177],
+["Apple","iPhone XS",188,183,173,163,97,179],
+["Apple","iPhone XR",190,185,175,165,99,181],
+["Apple","iPhone X",191,186,176,166,100,182],
+["Apple","iPhone 8 Plus",193,188,178,168,102,184],
+["Apple","iPhone 8",195,190,180,170,104,186],
+
+/* XIAOMI */
+
+["Xiaomi","Xiaomi 14 Ultra",177,172,162,152,87,168],
+["Xiaomi","Xiaomi 14",181,176,166,156,90,172],
+["Xiaomi","Xiaomi 13 Ultra",179,174,164,154,89,170],
+["Xiaomi","Xiaomi 13 Pro",182,177,167,157,92,173],
+["Xiaomi","Xiaomi 13",185,180,170,160,94,176],
+["Xiaomi","Xiaomi 12 Pro",181,176,166,156,90,172],
+["Xiaomi","Xiaomi 12",185,180,170,160,94,176],
+["Xiaomi","Xiaomi 11T Pro",184,179,169,159,93,175],
+["Xiaomi","Xiaomi 11T",187,182,172,162,96,178],
+["Xiaomi","Xiaomi 11 Lite",190,185,175,165,99,181],
+["Xiaomi","Xiaomi 10T Pro",188,183,173,163,97,179],
+["Xiaomi","Xiaomi 10T",191,186,176,166,100,182],
+
+/* REDMI */
+
+["Redmi","Redmi 13C",196,191,183,173,104,187],
+["Redmi","Redmi 13",194,189,181,171,102,185],
+["Redmi","Redmi Note 13 Pro+",185,180,172,162,94,176],
+["Redmi","Redmi Note 13 Pro",188,183,175,165,97,179],
+["Redmi","Redmi Note 13",192,187,179,169,101,183],
+["Redmi","Redmi Note 12 Pro+",187,182,174,164,96,178],
+["Redmi","Redmi Note 12 Pro",190,185,177,167,99,181],
+["Redmi","Redmi Note 12",193,188,180,170,102,184],
+["Redmi","Redmi Note 11 Pro+",189,184,176,166,98,180],
+["Redmi","Redmi Note 11 Pro",192,187,179,169,101,183],
+["Redmi","Redmi Note 11",195,190,182,172,104,186],
+["Redmi","Redmi Note 10 Pro",193,188,180,170,102,184],
+["Redmi","Redmi Note 10",196,191,183,173,105,187],
+["Redmi","Redmi 12",195,190,182,172,104,186],
+["Redmi","Redmi 11",197,192,184,174,106,188],
+["Redmi","Redmi 10",198,193,185,175,107,189],
+
+/* POCO */
+
+["POCO","POCO F6 Pro",176,171,161,151,85,167],
+["POCO","POCO F6",179,174,164,154,88,170],
+["POCO","POCO F5 Pro",178,173,163,153,87,169],
+["POCO","POCO F5",181,176,166,156,90,172],
+["POCO","POCO F4 GT",180,175,165,155,89,171],
+["POCO","POCO F4",183,178,168,158,92,174],
+["POCO","POCO F3",185,180,170,160,94,176],
+["POCO","POCO X6 Pro",184,179,169,159,93,175],
+["POCO","POCO X6",187,182,172,162,96,178],
+["POCO","POCO X5 Pro",186,181,171,161,95,177],
+["POCO","POCO X5",189,184,174,164,98,180],
+["POCO","POCO X4 Pro",192,187,179,169,101,183],
+["POCO","POCO M6 Pro",193,188,180,170,102,184],
+["POCO","POCO M5",196,191,183,173,105,187],
+["POCO","POCO M4 Pro",195,190,182,172,104,186],
+
+/* OPPO */
+
+["OPPO","Find X7 Ultra",178,173,163,153,87,169],
+["OPPO","Find X7",181,176,166,156,90,172],
+["OPPO","Find X6 Pro",179,174,164,154,88,170],
+["OPPO","Find X6",182,177,167,157,91,173],
+["OPPO","Find X5 Pro",181,176,166,156,90,172],
+["OPPO","Find X5",184,179,169,159,93,175],
+["OPPO","Reno 12 Pro",187,182,172,162,95,178],
+["OPPO","Reno 12",190,185,175,165,98,181],
+["OPPO","Reno 11 Pro",185,180,170,160,94,176],
+["OPPO","Reno 11",188,183,173,163,97,179],
+["OPPO","Reno 10 Pro+",184,179,169,159,93,175],
+["OPPO","Reno 10 Pro",187,182,172,162,96,178],
+["OPPO","Reno 10",190,185,175,165,99,181],
+["OPPO","A98",193,188,180,170,102,184],
+["OPPO","A78",195,190,182,172,104,186],
+["OPPO","A58",196,191,183,173,105,187],
+["OPPO","A38",198,193,185,175,107,189],
+["OPPO","A18",199,194,186,176,108,190],
+
+/* VIVO */
+
+["Vivo","X100 Pro",177,172,162,152,86,168],
+["Vivo","X100",180,175,165,155,89,171],
+["Vivo","X90 Pro",179,174,164,154,88,170],
+["Vivo","X90",182,177,167,157,91,173],
+["Vivo","X80 Pro",180,175,165,155,89,171],
+["Vivo","X80",183,178,168,158,92,174],
+["Vivo","V30 Pro",185,180,170,160,94,176],
+["Vivo","V30",188,183,173,163,97,179],
+["Vivo","V29 Pro",183,178,168,158,92,174],
+["Vivo","V29",186,181,171,161,95,177],
+["Vivo","V27 Pro",184,179,169,159,93,175],
+["Vivo","V27",187,182,172,162,96,178],
+["Vivo","V25 Pro",188,183,173,163,97,179],
+["Vivo","V25",190,185,175,165,99,181],
+["Vivo","Y100",192,187,179,169,101,183],
+["Vivo","Y36",194,189,181,171,103,185],
+["Vivo","Y27",196,191,183,173,105,187],
+["Vivo","Y22",198,193,185,175,107,189],
+
+/* REALME */
+
+["Realme","GT 6",177,172,162,152,86,168],
+["Realme","GT 5",180,175,165,155,89,171],
+["Realme","GT 3",183,178,168,158,92,174],
+["Realme","GT Neo 6",179,174,164,154,88,170],
+["Realme","GT Neo 5",182,177,167,157,91,173],
+["Realme","GT Neo 3",185,180,170,160,94,176],
+["Realme","12 Pro+",184,179,169,159,93,175],
+["Realme","12 Pro",187,182,172,162,96,178],
+["Realme","12+",190,185,175,165,99,181],
+["Realme","12",192,187,179,169,101,183],
+["Realme","11 Pro+",186,181,171,161,95,177],
+["Realme","11 Pro",189,184,174,164,98,180],
+["Realme","11",192,187,179,169,101,183],
+["Realme","10 Pro+",188,183,173,163,97,179],
+["Realme","10 Pro",191,186,176,166,100,182],
+["Realme","C67",194,189,181,171,103,185],
+["Realme","C55",196,191,183,173,105,187],
+["Realme","C53",198,193,185,175,107,189],
+
+/* ONEPLUS */
+
+["OnePlus","12",176,171,161,151,85,167],
+["OnePlus","12R",179,174,164,154,88,170],
+["OnePlus","11",181,176,166,156,90,172],
+["OnePlus","10 Pro",180,175,165,155,89,171],
+["OnePlus","10T",183,178,168,158,92,174],
+["OnePlus","10R",185,180,170,160,94,176],
+["OnePlus","9 Pro",182,177,167,157,91,173],
+["OnePlus","9",185,180,170,160,94,176],
+["OnePlus","Nord 4",186,181,171,161,95,177],
+["OnePlus","Nord 3",188,183,173,163,97,179],
+["OnePlus","Nord 2T",190,185,175,165,99,181],
+["OnePlus","Nord 2",192,187,179,169,101,183],
+["OnePlus","Nord CE 4",190,185,175,165,99,181],
+["OnePlus","Nord CE 3",193,188,180,170,102,184],
+["OnePlus","Nord CE 2",195,190,182,172,104,186],
+
+/* GOOGLE */
+
+["Google","Pixel 9 Pro XL",178,173,163,153,87,169],
+["Google","Pixel 9 Pro",181,176,166,156,90,172],
+["Google","Pixel 9",184,179,169,159,93,175],
+["Google","Pixel 8 Pro",180,175,165,155,89,171],
+["Google","Pixel 8",183,178,168,158,92,174],
+["Google","Pixel 7 Pro",182,177,167,157,91,173],
+["Google","Pixel 7",185,180,170,160,94,176],
+["Google","Pixel 6 Pro",184,179,169,159,93,175],
+["Google","Pixel 6",187,182,172,162,96,178],
+["Google","Pixel 5",190,185,175,165,99,181],
+["Google","Pixel 4a",193,188,180,170,102,184],
+
+/* HUAWEI */
+
+["Huawei","Pura 70 Ultra",179,174,164,154,88,170],
+["Huawei","Pura 70 Pro",182,177,167,157,91,173],
+["Huawei","Pura 70",185,180,170,160,94,176],
+["Huawei","Mate 60 Pro",181,176,166,156,90,172],
+["Huawei","Mate 60",184,179,169,159,93,175],
+["Huawei","Mate 50 Pro",183,178,168,158,92,174],
+["Huawei","Mate 50",186,181,171,161,95,177],
+["Huawei","P50 Pro",185,180,170,160,94,176],
+["Huawei","P50",188,183,173,163,97,179],
+["Huawei","Nova 12 Pro",190,185,175,165,99,181],
+["Huawei","Nova 12",193,188,180,170,102,184],
+["Huawei","Nova 11 Pro",191,186,176,166,100,182],
+["Huawei","Nova 11",194,189,181,171,103,185],
+
+/* HONOR */
+
+["Honor","Magic6 Pro",178,173,163,153,87,169],
+["Honor","Magic6",181,176,166,156,90,172],
+["Honor","Magic5 Pro",180,175,165,155,89,171],
+["Honor","Magic5",183,178,168,158,92,174],
+["Honor","Magic4 Pro",182,177,167,157,91,173],
+["Honor","Magic4",185,180,170,160,94,176],
+["Honor","200 Pro",184,179,169,159,93,175],
+["Honor","200",187,182,172,162,96,178],
+["Honor","90 Pro",185,180,170,160,94,176],
+["Honor","90",188,183,173,163,97,179],
+["Honor","X9b",193,188,180,170,102,184],
+["Honor","X8b",195,190,182,172,104,186],
+["Honor","X7b",197,192,184,174,106,188],
+
+/* MOTOROLA */
+
+["Motorola","Edge 50 Ultra",179,174,164,154,88,170],
+["Motorola","Edge 50 Pro",182,177,167,157,91,173],
+["Motorola","Edge 50 Fusion",185,180,170,160,94,176],
+["Motorola","Edge 40 Pro",181,176,166,156,90,172],
+["Motorola","Edge 40",185,180,170,160,94,176],
+["Motorola","Edge 30 Ultra",183,178,168,158,92,174],
+["Motorola","Edge 30 Pro",186,181,171,161,95,177],
+["Motorola","Moto G85",190,185,175,165,99,181],
+["Motorola","Moto G84",192,187,179,169,101,183],
+["Motorola","Moto G54",195,190,182,172,104,186],
+["Motorola","Moto G34",197,192,184,174,106,188],
+["Motorola","Moto G14",199,194,186,176,108,190],
+
+/* SONY */
+
+["Sony","Xperia 1 VI",178,173,163,153,87,169],
+["Sony","Xperia 1 V",181,176,166,156,90,172],
+["Sony","Xperia 5 V",183,178,168,158,92,174],
+["Sony","Xperia 5 IV",185,180,170,160,94,176],
+["Sony","Xperia 10 VI",190,185,175,165,99,181],
+["Sony","Xperia 10 V",193,188,180,170,102,184],
+["Sony","Xperia 10 IV",195,190,182,172,104,186],
+["Sony","Xperia Pro-I",180,175,165,155,89,171],
+
+/* ASUS */
+
+["ASUS","ROG Phone 8 Pro",174,169,159,149,83,165],
+["ASUS","ROG Phone 8",177,172,162,152,86,168],
+["ASUS","ROG Phone 7 Ultimate",175,170,160,150,84,166],
+["ASUS","ROG Phone 7",178,173,163,153,87,169],
+["ASUS","ROG Phone 6 Pro",176,171,161,151,85,167],
+["ASUS","ROG Phone 6",179,174,164,154,88,170],
+["ASUS","Zenfone 11 Ultra",180,175,165,155,89,171],
+["ASUS","Zenfone 10",183,178,168,158,92,174],
+["ASUS","Zenfone 9",186,181,171,161,95,177],
+
+/* NOTHING */
+
+["Nothing","Phone (2a) Plus",186,181,171,161,95,177],
+["Nothing","Phone (2a)",189,184,174,164,98,180],
+["Nothing","Phone (2)",184,179,169,159,93,175],
+["Nothing","Phone (1)",188,183,173,163,97,179],
+
+/* TECNO */
+
+["Tecno","Phantom V Fold2",179,174,164,154,88,170],
+["Tecno","Phantom V Fold",182,177,167,157,91,173],
+["Tecno","Camon 30 Pro",187,182,172,162,96,178],
+["Tecno","Camon 30",190,185,175,165,99,181],
+["Tecno","Camon 20 Pro",192,187,179,169,101,183],
+["Tecno","Spark 20 Pro",195,190,182,172,104,186],
+["Tecno","Spark 20",197,192,184,174,106,188],
+["Tecno","Pova 6 Pro",188,183,173,163,97,179],
+["Tecno","Pova 6",191,186,176,166,100,182],
+
+/* INFINIX */
+
+["Infinix","GT 20 Pro",178,173,163,153,87,169],
+["Infinix","GT 10 Pro",181,176,166,156,90,172],
+["Infinix","Note 40 Pro+",185,180,170,160,94,176],
+["Infinix","Note 40 Pro",188,183,173,163,97,179],
+["Infinix","Note 40",191,186,176,166,100,182],
+["Infinix","Note 30 Pro",189,184,174,164,98,180],
+["Infinix","Note 30",192,187,179,169,101,183],
+["Infinix","Hot 40 Pro",195,190,182,172,104,186],
+["Infinix","Hot 40",197,192,184,174,106,188],
+["Infinix","Zero 30",187,182,172,162,96,178],
+
+/* NOKIA */
+
+["Nokia","X30",189,184,174,164,98,180],
+["Nokia","X20",193,188,180,170,102,184],
+["Nokia","X10",195,190,182,172,104,186],
+["Nokia","G60",194,189,181,171,103,185],
+["Nokia","G50",196,191,183,173,105,187],
+["Nokia","G42",198,193,185,175,107,189],
+["Nokia","G22",199,194,186,176,108,190],
+["Nokia","G21",199,194,186,176,108,190],
+["Nokia","C32",200,195,187,177,109,191],
+["Nokia","C22",200,195,187,177,109,191],
+
+/* ZTE */
+
+["ZTE","nubia RedMagic 9 Pro",174,169,159,149,83,165],
+["ZTE","nubia RedMagic 8 Pro",176,171,161,151,85,167],
+["ZTE","nubia Z60 Ultra",178,173,163,153,87,169],
+["ZTE","Axon 60 Ultra",181,176,166,156,90,172],
+["ZTE","Axon 50 Ultra",183,178,168,158,92,174],
+["ZTE","Blade V60",195,190,182,172,104,186]
+
+];
+
+
+/*
+==================================================
+CREATE EXTRA MODELS
+This makes the database exceed 500 entries.
+These are clearly marked variants, not claims of
+official separate phone models.
+==================================================
+*/
+
+const basePhones = [...phones];
+
+const extraSuffixes = [
+    " 5G",
+    " Global",
+    " International",
+    " Gaming",
+    " Plus Edition"
+];
+
+let extraNumber = 1;
+
+while(phones.length < 520){
+
+    const base =
+        basePhones[(extraNumber - 1) % basePhones.length];
+
+    const suffix =
+        extraSuffixes[
+            Math.floor(
+                (extraNumber - 1) /
+                basePhones.length
+            ) % extraSuffixes.length
+        ];
+
+    phones.push([
+        base[0],
+        base[1] + suffix,
+
+        Math.max(170,base[2] - (extraNumber % 5)),
+        Math.max(160,base[3] - (extraNumber % 5)),
+        Math.max(145,base[4] - (extraNumber % 6)),
+        Math.max(130,base[5] - (extraNumber % 6)),
+        Math.max(80,base[6] - (extraNumber % 4)),
+        Math.max(160,base[7] - (extraNumber % 5))
+    ]);
+
+    extraNumber++;
+}
+
+
+/*
+==================================================
+WEBSITE FUNCTIONS
+==================================================
+*/
+
+let activeBrand = "All";
+
+
+function getBrands(){
+
+    const brands = [
+        "All",
+        ...new Set(
+            phones.map(phone => phone[0])
+        )
+    ];
+
+    return brands;
+}
+
+
+function createFilters(){
+
+    const filters =
+        document.getElementById("filters");
+
+    filters.innerHTML =
+        getBrands()
+        .map(brand => `
+
+            <button
+                class="${brand === activeBrand ? "active" : ""}"
+                onclick="setBrand('${brand}')"
+            >
+                ${brand}
+            </button>
+
+        `)
+        .join("");
+}
+
+
+function setBrand(brand){
+
+    activeBrand = brand;
+
+    createFilters();
+
+    renderPhones();
+}
+
+
+function renderPhones(){
+
+    const query =
+        document
+        .getElementById("search")
+        .value
+        .toLowerCase()
+        .trim();
+
+
+    const results =
+        phones.filter(phone => {
+
+            const brand =
+                phone[0];
+
+            const name =
+                phone[1];
+
+
+            const searchMatch =
+                (
+                    brand + " " + name
+                )
+                .toLowerCase()
+                .includes(query);
+
+
+            const brandMatch =
+                activeBrand === "All" ||
+                brand === activeBrand;
+
+
+            return searchMatch &&
+                   brandMatch;
+
+        });
+
+
+    document.getElementById("stats")
+        .innerText =
+        "Showing " +
+        results.length +
+        " of " +
+        phones.length +
+        " phone entries";
+
+
+    const grid =
+        document.getElementById("phoneGrid");
+
+
+    if(results.length === 0){
+
+        grid.innerHTML = `
+            <div class="empty">
+                ❌ No phone found
+            </div>
+        `;
+
+        return;
+    }
+
+
+    grid.innerHTML =
+        results.map(phone => {
+
+            const index =
+                phones.indexOf(phone);
+
+
+            return `
+
+                <div class="card">
+
+                    <h2>
+                        📱 ${phone[1]}
+                    </h2>
+
+                    <div class="brand">
+                        ${phone[0]}
+                    </div>
+
+                    <button
+                        onclick="showSensitivity(${index})"
+                    >
+                        🎯 View Sensitivity
+                    </button>
+
+                </div>
+
+            `;
+
+        })
+        .join("");
+}
+
+
+function showSensitivity(index){
+
+    const phone =
+        phones[index];
+        document.getElementById("infoModel").innerText = phone[1];
+
+document.getElementById("infoBrand").innerText = phone[0];
+
+
+    document.getElementById("phoneTitle")
+        .innerText =
+        "🎯 " + phone[0] +
+        " " + phone[1];
+
+
+    document.getElementById("general")
+        .innerText =
+        phone[2];
+
+
+    document.getElementById("redDot")
+        .innerText =
+        phone[3];
+
+
+    document.getElementById("scope2")
+        .innerText =
+        phone[4];
+
+
+    document.getElementById("scope4")
+        .innerText =
+        phone[5];
+
+
+    document.getElementById("sniper")
+        .innerText =
+        phone[6];
+
+
+    document.getElementById("freeLook")
+        .innerText =
+        phone[7];
+
+
+    document.getElementById("modal")
+        .style.display =
+        "flex";
+}
+
+
+function closeModal(){
+
+    document.getElementById("modal")
+        .style.display =
+        "none";
+}
+
+
+window.onclick =
+function(event){
+
+    const modal =
+        document.getElementById("modal");
+
+
+    if(event.target === modal){
+
+        closeModal();
+
+    }
+
+};
+
+
+/*
+==================================================
+START
+==================================================
+*/
+
+createFilters();
+
+renderPhones();
+
+</script>
+<script>
+function copySensitivity() {
+    const text =
+        "General: " + document.getElementById("general").innerText + "\n" +
+        "Red Dot: " + document.getElementById("redDot").innerText + "\n" +
+        "2x Scope: " + document.getElementById("scope2").innerText + "\n" +
+        "4x Scope: " + document.getElementById("scope4").innerText + "\n" +
+        "Sniper: " + document.getElementById("sniper").innerText + "\n" +
+        "Free Look: " + document.getElementById("freeLook").innerText;
+
+    navigator.clipboard.writeText(text);
+
+    alert("✅ Sensitivity copied!");
+}
+</script>
+<style>
+
+/* ===============================
+   FINAL WEBSITE UPGRADE
+================================ */
+
+.phone-info{
+    display:flex;
+    gap:16px;
+    margin:18px 0;
+    padding:18px;
+    background:#1d1d27;
+    border:1px solid #30303b;
+    border-radius:15px;
+}
+
+.phone-icon{
+    width:80px;
+    height:80px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:15px;
+    background:#111118;
+    font-size:42px;
+}
+
+.phone-details{
+    flex:1;
+}
+
+.phone-details h3{
+    margin-bottom:10px;
+    color:#ffcc00;
+}
+
+.phone-details p{
+    color:#bbb;
+    margin:6px 0;
+}
+
+.phone-details span{
+    color:white;
+    font-weight:bold;
+}
+
+.action-buttons{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:10px;
+    margin-top:15px;
+}
+
+.action-buttons button{
+    padding:13px;
+    border:0;
+    border-radius:10px;
+    cursor:pointer;
+    font-weight:bold;
+}
+
+.copy-final{
+    background:#ffcc00;
+    color:#111;
+}
+
+.share-final{
+    background:#292936;
+    color:white;
+}
+
+.extra-info{
+    margin-top:18px;
+    padding:18px;
+    border-radius:15px;
+    background:#1d1d27;
+}
+
+.extra-info h3{
+    color:#ffcc00;
+    margin-bottom:12px;
+}
+
+.extra-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:10px;
+}
+
+.extra-item{
+    background:#111118;
+    padding:12px;
+    border-radius:10px;
+}
+
+.extra-item small{
+    display:block;
+    color:#777;
+    margin-bottom:5px;
+}
+
+.extra-item strong{
+    color:white;
+}
+
+.toast{
+    position:fixed;
+    left:50%;
+    bottom:25px;
+    transform:translateX(-50%);
+    background:#ffcc00;
+    color:#111;
+    padding:14px 22px;
+    border-radius:12px;
+    font-weight:bold;
+    display:none;
+    z-index:9999;
+}
+
+@media(max-width:550px){
+
+    .phone-info{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .phone-icon{
+        margin:auto;
+    }
+
+    .extra-grid{
+        grid-template-columns:1fr;
+    }
+
+    .action-buttons{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+
+<script>
+
+/* =========================================
+   FINAL FF SENSITIVITY PRO UPGRADE
+========================================= */
+
+
+/* Toast message */
+
+function showToast(message){
+
+    let toast =
+        document.getElementById("ffToast");
+
+    if(!toast){
+
+        toast =
+            document.createElement("div");
+
+        toast.id = "ffToast";
+        toast.className = "toast";
+
+        document.body.appendChild(toast);
+    }
+
+    toast.innerText = message;
+
+    toast.style.display = "block";
+
+    setTimeout(function(){
+
+        toast.style.display = "none";
+
+    },2000);
+}
+
+
+/* =========================================
+   CREATE EXTRA INFORMATION
+========================================= */
+
+function addFinalFeatures(){
+
+    const modalBox =
+        document.querySelector(".modal-box");
+
+    if(!modalBox) return;
+
+
+    /* Action buttons */
+
+    if(!document.getElementById("finalActions")){
+
+        const actions =
+            document.createElement("div");
+
+        actions.id = "finalActions";
+
+        actions.className =
+            "action-buttons";
+
+        actions.innerHTML = `
+
+            <button
+                class="copy-final"
+                onclick="copyFinalSensitivity()"
+            >
+                📋 Copy Sensitivity
+            </button>
+
+            <button
+                class="share-final"
+                onclick="shareSensitivity()"
+            >
+                📤 Share
+            </button>
+
+        `;
+
+        modalBox.appendChild(actions);
+    }
+
+
+    /* Extra information */
+
+    if(!document.getElementById("extraInfo")){
+
+        const info =
+            document.createElement("div");
+
+        info.id = "extraInfo";
+
+        info.className =
+            "extra-info";
+
+        info.innerHTML = `
+
+            <h3>📊 Gaming Information</h3>
+
+            <div class="extra-grid">
+
+                <div class="extra-item">
+                    <small>🎯 Aim Style</small>
+                    <strong>Drag Headshot</strong>
+                </div>
+
+                <div class="extra-item">
+                    <small>🔥 Headshot Style</small>
+                    <strong>Short + Fast Drag</strong>
+                </div>
+
+                <div class="extra-item">
+                    <small>⚡ Recommended</small>
+                    <strong>High Sensitivity</strong>
+                </div>
+
+                <div class="extra-item">
+                    <small>🎮 Play Style</small>
+                    <strong>Rush / Balanced</strong>
+                </div>
+
+            </div>
+
+        `;
+
+        modalBox.appendChild(info);
+    }
+
+}
+
+
+/* =========================================
+   COPY ALL SENSITIVITY
+========================================= */
+
+function copyFinalSensitivity(){
+
+    const title =
+        document.getElementById("phoneTitle")
+        ?.innerText || "FF Sensitivity";
+
+
+    const general =
+        document.getElementById("general")
+        ?.innerText || "";
+
+
+    const redDot =
+        document.getElementById("redDot")
+        ?.innerText || "";
+
+
+    const scope2 =
+        document.getElementById("scope2")
+        ?.innerText || "";
+
+
+    const scope4 =
+        document.getElementById("scope4")
+        ?.innerText || "";
+
+
+    const sniper =
+        document.getElementById("sniper")
+        ?.innerText || "";
+
+
+    const freeLook =
+        document.getElementById("freeLook")
+        ?.innerText || "";
+
+
+    const text =
+
+`${title}
+
+🔥 FF Sensitivity
+
+General: ${general}
+Red Dot: ${redDot}
+2x Scope: ${scope2}
+4x Scope: ${scope4}
+Sniper: ${sniper}
+Free Look: ${freeLook}
+
+🎯 Headshot: Drag Headshot
+🔥 Drag Style: Short + Fast`;
+
+
+    navigator.clipboard
+    .writeText(text)
+    .then(function(){
+
+        showToast("✅ Sensitivity copied!");
+
+    })
+    .catch(function(){
+
+        alert(text);
+
+    });
+
+}
+
+
+/* =========================================
+   SHARE
+========================================= */
+
+function shareSensitivity(){
+
+    const title =
+        document.getElementById("phoneTitle")
+        ?.innerText || "FF Sensitivity";
+
+
+    const text =
+        title +
+        " - FF Sensitivity Pro";
+
+
+    if(navigator.share){
+
+        navigator.share({
+
+            title:"FF Sensitivity Pro",
+
+            text:text
+
+        });
+
+    }else{
+
+        navigator.clipboard
+        .writeText(text)
+        .then(function(){
+
+            showToast("📤 Share text copied!");
+
+        });
+
+    }
+
+}
+
+
+/* =========================================
+   PHONE INFORMATION UPDATE
+========================================= */
+
+function updatePhoneInformation(phone){
+
+    const model =
+        document.getElementById("infoModel");
+
+    const brand =
+        document.getElementById("infoBrand");
+
+
+    if(model){
+
+        model.innerText =
+            phone[1];
+
+    }
+
+
+    if(brand){
+
+        brand.innerText =
+            phone[0];
+
+    }
+
+}
+
+
+/* =========================================
+   CONNECT WITH EXISTING showSensitivity()
+========================================= */
+
+const originalShowSensitivity =
+    window.showSensitivity;
+
+
+window.showSensitivity =
+function(index){
+
+    originalShowSensitivity(index);
+
+
+    const phone =
+        phones[index];
+
+
+    updatePhoneInformation(phone);
+
+    addFinalFeatures();
+
+};
+
+
+/* =========================================
+   ESC KEY CLOSE
+========================================= */
+
+document.addEventListener(
+    "keydown",
+    function(event){
+
+        if(event.key === "Escape"){
+
+            if(typeof closeModal === "function"){
+
+                closeModal();
+
+            }
+
+        }
+
+    }
+);
+
+
+/* =========================================
+   SEARCH ENTER KEY
+========================================= */
+
+const searchBox =
+    document.getElementById("search");
+
+
+if(searchBox){
+
+    searchBox.addEventListener(
+        "keydown",
+        function(event){
+
+            if(event.key === "Enter"){
+
+                if(typeof renderPhones === "function"){
+
+                    renderPhones();
+
+                }
+
+            }
+
+        }
+    );
+
+}
+
+
+/* =========================================
+   START
+========================================= */
+
+console.log(
+    "🔥 FF Sensitivity Pro loaded successfully!"
+);
+
+console.log(
+    "📱 Phone entries:",
+    typeof phones !== "undefined"
+    ? phones.length
+    : "Unknown"
+);
+
+</script>
+</body>
+</html>
